@@ -47,7 +47,7 @@ public class CommandExecutor {
                 Function.identity()
             ));
         this.executionContext = new ExecutionContext(
-            userInputReader, commandOutputRenderer, new ExecutionState());
+            userInputReader, commandOutputRenderer);
     }
 
     public void run() {
@@ -85,10 +85,10 @@ public class CommandExecutor {
                     commands.get(userInputReader.nextInt()))
                 .map(IndexedCommand::command)
                 .orElseThrow(NoSuchElementException::new);
-
             // handle both formatting exceptions and nonexistent command id
         } catch (NoSuchElementException exception) {
             commandOutputRenderer.renderError("Wrong command id");
+            userInputReader.nextLine();
             return null;
         }
     }

@@ -7,18 +7,17 @@ import university.homework.state.Worker;
 
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
-public class ShowTableRowsCommand implements Command {
+public class CreateWorkerCommand implements Command {
     private final WorkersDao workersDao;
 
-    public ShowTableRowsCommand(WorkersDao workersDao) {
+    public CreateWorkerCommand(WorkersDao workersDao) {
         this.workersDao = workersDao;
     }
 
     @Override
     public String getName() {
-        return "Show table rows";
+        return "Save worker to db";
     }
 
     @Override
@@ -27,15 +26,23 @@ public class ShowTableRowsCommand implements Command {
             context.commandOutputRenderer().askUser("Enter table name: ");
             String tableName = context.userInputReader().next();
 
-            String workers = workersDao.getWorkers(tableName)
-                    .stream()
-                    .map(Worker::toString)
-                    .collect(Collectors.joining("\n"));
-            return CommandResult.success(workers);
+            Worker worker = new Worker();
+            context.commandOutputRenderer().askUser("Enter name: ");
+            worker.setName(context.userInputReader().next());
+
+            context.commandOutputRenderer().askUser("Enter age: ");
+            worker.setAge(context.userInputReader().nextInt());
+
+            context.commandOutputRenderer().askUser("Enter salary: ");
+            worker.setSalary(context.userInputReader().nextInt());
+
+            workersDao.saveWorker(tableName, worker);
+
+            return CommandResult.success("Worker successfully saved: " + worker);
         } catch (NoSuchElementException | IllegalStateException readerException) {
             return CommandResult.userError(readerException.getMessage());
         } catch (SQLException sqlException) {
-            return CommandResult.userError("Error showing table rows: " + sqlException.getMessage());
+            return CommandResult.userError("Error saving worker: " + sqlException.getMessage());
         }
     }
 }

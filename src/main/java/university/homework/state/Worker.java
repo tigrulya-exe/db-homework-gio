@@ -10,4 +10,13 @@ public class Worker extends Student {
     public void setSalary(int salary) {
         this.salary = salary;
     }
+
+    @Override
+    public String toString() {
+        return "Worker{" +
+                "name=" + getName() +
+                "age=" + getAge() +
+                "salary=" + salary +
+                '}';
+    }
 }

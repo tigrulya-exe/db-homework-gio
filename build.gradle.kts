@@ -1,5 +1,7 @@
 plugins {
     java
+    application
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "university.homework"
@@ -15,7 +17,7 @@ repositories {
 
 dependencies {
     // PostgreSQL драйвер
-    implementation("org.postgresql:postgresql:42.6.0")
+    implementation("org.postgresql:postgresql:42.7.4")
 
     // Apache POI для работы с Excel
     implementation("org.apache.poi:poi-ooxml:5.2.2")
@@ -41,4 +43,8 @@ tasks.withType<JavaCompile> {
 
 tasks.withType<JavaExec> {
     systemProperty("file.encoding", "UTF-8")
+}
+
+application {
+    mainClass.set("university.homework.Main")
 }
