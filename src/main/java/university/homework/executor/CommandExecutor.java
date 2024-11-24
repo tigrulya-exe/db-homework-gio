@@ -1,4 +1,4 @@
-package university.homework.db;
+package university.homework.executor;
 
 import java.util.List;
 import java.util.Map;
@@ -8,14 +8,14 @@ import java.util.Scanner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import university.homework.db.command.Command;
-import university.homework.db.command.CommandException;
-import university.homework.db.command.IndexedCommand;
-import university.homework.db.command.result.StopExecution;
-import university.homework.db.command.result.SuccessResult;
-import university.homework.db.command.result.UserErrorResult;
-import university.homework.db.render.CommandRenderer;
-import university.homework.db.render.ResultRenderer;
+import university.homework.command.Command;
+import university.homework.command.CommandException;
+import university.homework.command.result.StopExecution;
+import university.homework.command.result.SuccessResult;
+import university.homework.command.result.UserErrorResult;
+import university.homework.render.CommandRenderer;
+import university.homework.render.CommandOutputRenderer;
+import university.homework.state.ExecutionState;
 
 public class CommandExecutor {
 
@@ -24,12 +24,13 @@ public class CommandExecutor {
     private final Scanner userInputReader;
 
     private final CommandRenderer commandRenderer;
-    private final ResultRenderer resultRenderer;
+    private final CommandOutputRenderer commandOutputRenderer;
+    private final ExecutionContext executionContext;
 
     public CommandExecutor(
         List<Command> commands,
         CommandRenderer commandRenderer,
-        ResultRenderer resultRenderer,
+        CommandOutputRenderer commandOutputRenderer,
         Scanner userInputReader
     ) {
         if (commands == null || commands.isEmpty()) {
@@ -37,7 +38,7 @@ public class CommandExecutor {
         }
 
         this.userInputReader = userInputReader;
-        this.resultRenderer = resultRenderer;
+        this.commandOutputRenderer = commandOutputRenderer;
         this.commandRenderer = commandRenderer;
         this.commands = IntStream.range(0, commands.size())
             .mapToObj(idx -> new IndexedCommand(idx + 1, commands.get(idx)))
@@ -45,6 +46,8 @@ public class CommandExecutor {
                 IndexedCommand::index,
                 Function.identity()
             ));
+        this.executionContext = new ExecutionContext(
+            userInputReader, commandOutputRenderer, new ExecutionState());
     }
 
     public void run() {
@@ -59,17 +62,17 @@ public class CommandExecutor {
             }
 
             try {
-                switch (nextCommand.execute(userInputReader)) {
+                switch (nextCommand.execute(executionContext)) {
                     case SuccessResult success ->
-                        resultRenderer.renderSuccess(success.getResult());
+                        commandOutputRenderer.renderSuccess(success.getResult());
                     case UserErrorResult userErrorResult ->
-                        resultRenderer.renderError(userErrorResult.getResult());
+                        commandOutputRenderer.renderError(userErrorResult.getResult());
                     case StopExecution ignored -> {
                         break commandLoop;
                     }
                 }
             } catch (CommandException commandException) {
-                resultRenderer.renderError("Fatal error: " +
+                commandOutputRenderer.renderError("Fatal error: " +
                     commandException.getMessage());
                 break;
             }
@@ -85,7 +88,7 @@ public class CommandExecutor {
 
             // handle both formatting exceptions and nonexistent command id
         } catch (NoSuchElementException exception) {
-            resultRenderer.renderError("Wrong command id");
+            commandOutputRenderer.renderError("Wrong command id");
             return null;
         }
     }

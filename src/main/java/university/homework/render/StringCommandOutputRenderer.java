@@ -1,11 +1,11 @@
-package university.homework.db.render;
+package university.homework.render;
 
 import java.io.PrintStream;
 
-public class StringResultRenderer implements ResultRenderer {
+public class StringCommandOutputRenderer implements CommandOutputRenderer {
     private final PrintStream outputStream;
 
-    public StringResultRenderer(PrintStream outputStream) {
+    public StringCommandOutputRenderer(PrintStream outputStream) {
         this.outputStream = outputStream;
     }
 
@@ -14,6 +14,11 @@ public class StringResultRenderer implements ResultRenderer {
         outputStream.print("[success]: ");
         outputStream.println(result);
         printDelimiter();
+    }
+
+    @Override
+    public void askUser(String text) {
+        outputStream.print(text);
     }
 
     @Override

@@ -1,8 +1,8 @@
-package university.homework.db.render;
+package university.homework.render;
 
 import java.io.PrintStream;
 import java.util.Collection;
-import university.homework.db.command.IndexedCommand;
+import university.homework.executor.IndexedCommand;
 
 public class StringCommandRenderer implements CommandRenderer {
 

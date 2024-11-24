@@ -1,4 +1,4 @@
-package university.homework.db.command.result;
+package university.homework.command.result;
 
 public abstract sealed class CommandResult permits StopExecution, SuccessResult, UserErrorResult {
     private final String result;

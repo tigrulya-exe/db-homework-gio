@@ -1,4 +1,4 @@
-package university.homework.db.command;
+package university.homework.command;
 
 public class CommandException extends RuntimeException {
     public CommandException(String message) {

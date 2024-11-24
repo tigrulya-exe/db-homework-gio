@@ -1,7 +1,7 @@
-package university.homework.db.render;
+package university.homework.render;
 
 import java.util.Collection;
-import university.homework.db.command.IndexedCommand;
+import university.homework.executor.IndexedCommand;
 
 public interface CommandRenderer {
     void render(Collection<IndexedCommand> commands);

@@ -1,4 +1,4 @@
-package university.homework.db.command.result;
+package university.homework.command.result;
 
 public final class UserErrorResult extends CommandResult {
     public UserErrorResult(String errorMessage) {
