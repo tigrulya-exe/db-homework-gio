@@ -24,6 +24,13 @@ dependencies {
 
     // Apache XMLBeans для работы с XML
     implementation("org.apache.xmlbeans:xmlbeans:5.1.1")
+
+    // Commons Logging (логгирование)
+    implementation("commons-logging:commons-logging:1.2")
+
+    // Log4j2 для логирования
+    implementation("org.apache.logging.log4j:log4j-api:2.20.0")
+    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
 }
 
 tasks.test {
