@@ -11,10 +11,8 @@ public class StringCommandOutputRenderer implements CommandOutputRenderer {
 
     @Override
     public void renderSuccess(String result) {
-        outputStream.println();
-        outputStream.println("Result: SUCCESS");
-        outputStream.println(result);
-        printDelimiter();
+        renderResult("Result: SUCCESS", result);
+
     }
 
     @Override
@@ -24,14 +22,19 @@ public class StringCommandOutputRenderer implements CommandOutputRenderer {
 
     @Override
     public void renderError(String errorMessage) {
+        renderResult("Result: ERROR", errorMessage);
+    }
+
+    private void renderResult(String prefix, String message) {
         outputStream.println();
-        outputStream.println("Result: ERROR");
-        outputStream.println(errorMessage);
+        outputStream.println(prefix);
         printDelimiter();
+        outputStream.println(message);
+        printDelimiter();
+        outputStream.println();
     }
 
     private void printDelimiter() {
         outputStream.println("----------------");
-        outputStream.println();
     }
 }

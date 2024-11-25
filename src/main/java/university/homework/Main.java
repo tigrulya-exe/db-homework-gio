@@ -46,7 +46,7 @@ public class Main {
                 new ShowTablesCommand(dbHandler),
                 new CreateTableCommand(workersDao),
                 new CreateWorkerCommand(dbHandler, workersDao),
-                new ShowTableRowsCommand(workersDao),
+                new ShowTableRowsCommand(dbHandler, workersDao),
                 new ExportTableCommand(dbHandler, excelDbExporter),
                 new StopExecutionCommand()
         );

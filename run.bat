@@ -1,1 +1,0 @@
-java -DdbUser=giorgiy -DdbUrl=jdbc:postgresql://localhost:65432/Homework -DdbPassword=armyanin -jar  .\build\libs\java-homework-1.0-SNAPSHOT-all.jar
