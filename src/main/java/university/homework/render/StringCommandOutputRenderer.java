@@ -11,19 +11,21 @@ public class StringCommandOutputRenderer implements CommandOutputRenderer {
 
     @Override
     public void renderSuccess(String result) {
-        outputStream.print("[success]: ");
+        outputStream.println();
+        outputStream.println("Result: SUCCESS");
         outputStream.println(result);
         printDelimiter();
     }
 
     @Override
-    public void askUser(String text) {
+    public void render(String text) {
         outputStream.print(text);
     }
 
     @Override
     public void renderError(String errorMessage) {
-        outputStream.print("[error]: ");
+        outputStream.println();
+        outputStream.println("Result: ERROR");
         outputStream.println(errorMessage);
         printDelimiter();
     }

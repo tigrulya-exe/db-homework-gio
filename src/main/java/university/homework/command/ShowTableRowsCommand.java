@@ -24,7 +24,7 @@ public class ShowTableRowsCommand implements Command {
     @Override
     public CommandResult execute(ExecutionContext context) throws CommandException {
         try {
-            context.commandOutputRenderer().askUser("Enter table name: ");
+            context.commandOutputRenderer().render("Enter table name: ");
             String tableName = context.userInputReader().next();
 
             String workers = workersDao.getWorkers(tableName)

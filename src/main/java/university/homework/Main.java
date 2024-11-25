@@ -7,6 +7,7 @@ import university.homework.command.CreateWorkerCommand;
 import university.homework.command.ExportTableCommand;
 import university.homework.command.ShowTableRowsCommand;
 import university.homework.command.ShowTablesCommand;
+import university.homework.command.StopExecutionCommand;
 import university.homework.db.DbExporter;
 import university.homework.db.DbHandler;
 import university.homework.db.ExcelDbExporter;
@@ -44,9 +45,10 @@ public class Main {
         return List.of(
                 new ShowTablesCommand(dbHandler),
                 new CreateTableCommand(workersDao),
-                new CreateWorkerCommand(workersDao),
+                new CreateWorkerCommand(dbHandler, workersDao),
                 new ShowTableRowsCommand(workersDao),
-                new ExportTableCommand(excelDbExporter)
+                new ExportTableCommand(dbHandler, excelDbExporter),
+                new StopExecutionCommand()
         );
     }
 

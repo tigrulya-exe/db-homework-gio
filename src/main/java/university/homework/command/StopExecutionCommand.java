@@ -11,6 +11,7 @@ public class StopExecutionCommand implements Command {
 
     @Override
     public CommandResult execute(ExecutionContext context) throws CommandException {
+        context.commandOutputRenderer().renderSuccess("Shutting down...");
         return CommandResult.stopExecution();
     }
 }

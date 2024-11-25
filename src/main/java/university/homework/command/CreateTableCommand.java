@@ -22,8 +22,9 @@ public class CreateTableCommand implements Command {
     @Override
     public CommandResult execute(ExecutionContext context) throws CommandException {
         try {
-            context.commandOutputRenderer().askUser("Enter table name: ");
+            context.commandOutputRenderer().render("Enter table name: ");
             String tableName = context.userInputReader().next();
+
             workersDao.createNewTable(tableName);
             return CommandResult.success("Table " + tableName + " successfully created");
         } catch (NoSuchElementException | IllegalStateException readerException) {

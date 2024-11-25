@@ -13,10 +13,10 @@ public class Worker extends Student {
 
     @Override
     public String toString() {
-        return "Worker{" +
-                "name=" + getName() +
-                "age=" + getAge() +
-                "salary=" + salary +
-                '}';
+        return "{ " +
+                "name: " + getName() + ", " +
+                "age: " + getAge() + ", " +
+                "salary: " + salary +
+                " }";
     }
 }

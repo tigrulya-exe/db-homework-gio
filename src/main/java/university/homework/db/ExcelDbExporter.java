@@ -58,7 +58,6 @@ public class ExcelDbExporter implements DbExporter {
 
             // Write the workbook to the output stream
             workbook.write(outputStream);
-            System.out.println("Data has been exported to Excel successfully!");
         } catch (Exception exception) {
             throw new SQLException("Error exporting table "
                     + tableName + " to Excel format", exception);
